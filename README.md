@@ -111,7 +111,7 @@ SkillSwapAPI/
 
 ✔️ Achieves 90%+ code coverage
 
-📊 Report available in htmlcov/index.html
+📊 Report available in skillswap.png file which is uploaded above.
 
 8. 🙋‍♀️ Author
 Shriti Sadhu
