@@ -1,0 +1,79 @@
+<!-- templates/match.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SkillSwap Matches</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      color: #333;
+    }
+    input, button {
+      padding: 0.5rem;
+      font-size: 1rem;
+      margin-right: 0.5rem;
+    }
+    .result {
+      margin-top: 1rem;
+    }
+    .user-card {
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Find SkillSwap Matches</h1>
+  <input type="number" id="userId" placeholder="Enter your User ID">
+  <button onclick="fetchMatches()">Find Matches</button>
+
+  <div class="result" id="result"></div>
+
+  <script>
+    async function fetchMatches() {
+      const userId = document.getElementById("userId").value;
+      const resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = "Loading...";
+
+      const response = await fetch("http://127.0.0.1:8000/match/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ user_id: parseInt(userId) })
+      });
+
+      if (!response.ok) {
+        resultDiv.innerHTML = "Error fetching matches.";
+        return;
+      }
+
+      const data = await response.json();
+      if (data.length === 0) {
+        resultDiv.innerHTML = "No matches found.";
+        return;
+      }
+
+      resultDiv.innerHTML = "";
+      data.forEach(user => {
+        const userHTML = `
+          <div class="user-card">
+            <h3>${user.name} (${user.email})</h3>
+            <p><strong>Offers:</strong> ${user.skills_offered.join(", ")}</p>
+            <p><strong>Needs:</strong> ${user.skills_needed.join(", ")}</p>
+          </div>
+        `;
+        resultDiv.innerHTML += userHTML;
+      });
+    }
+  </script>
+</body>
+</html>
