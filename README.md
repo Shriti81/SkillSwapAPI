@@ -115,4 +115,4 @@ SkillSwapAPI/
 
 8. 🙋‍♀️ Author
 Shriti Sadhu
-🌐 GitHub
+🌐 https://github.com/Shriti81/SkillSwapAPI
